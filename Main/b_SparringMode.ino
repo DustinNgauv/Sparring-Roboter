@@ -1,33 +1,37 @@
 void SparringMode() {   
   unsigned long time1 = 0;  
-  unsigned long initialTime = millis();
+  unsigned long initialTime = millis(); // holds the amount of time passed since board has been started up
     
-  for (int i = 0; i < volume; i++) {         
+  // executes set of strikes based on the strike volume settings
+  for (int i = 0; i < volume; i++) {  
+
+    // stops servos if a round has ended
     if (countdowntime <= 1 || countdowntime > 4000000000) {              
       break;
     }
     
+    // chooses a random value between 1-4
     int servo = random(1,5);
 
+    // moves a servo based on chosen value
     switch (servo) {
     case 1:
-    leftHook();
-    break;
-
+      leftHook();
+      break;
     case 2:
-    leftStraight();
-    break;
-
+      leftStraight();
+      break;
     case 3:
-    rightStraight();
-    break;
-
+      rightStraight();
+      break;
     case 4:
-    rightHook();
-    break;
+      rightHook();
+      break;
     }               
   }               
 }
+
+// functions to the each servo based on the speed settings
 
 void rightStraight() {
   servo3.write(180, (255 * speed / 100), true);
@@ -49,17 +53,7 @@ void leftHook() {
   servo1.write(90, (255 * speed / 100), true);
 }
 
+// function wich calculates the rough time a servo needs to execute a strike based off the speed setting
 unsigned long servoDuration(int servoSpeed) {
   return (-410.2 * log(0.2 * servoSpeed - 3) + 1445.5);
-}
-
-void measurespeed(int s) {
-  long x = millis();
-  servo3.write(180, s, true);
-  servo3.write(90, s, true);
-  long y = millis();
-
-  float z = s *100 / 255;
-  myGLCD.print(String(y-x), 20, 20);  
-  myGLCD.print(String(-410.2 * log(0.2 * z - 3) + 1445.5), 20, 50);
 }
