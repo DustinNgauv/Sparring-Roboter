@@ -1,4 +1,5 @@
-#include <Servo.h>
+#include <math.h>
+#include <VarSpeedServo.h>
 #include <UTFT.h>
 #include <URTouch.h>
 #include <UTFT_Buttons.h>
@@ -15,21 +16,12 @@ extern uint8_t SevenSegment96x144Num[];
 extern uint8_t GroteskBold24x48[];
 
 
-int Rounds_btn;
-int Speed_btn;
-int Time_btn;
-int Level_btn;
-int Rest_btn;
-int Volume_btn;
-int Start_btn;
-int StopSpar_btn;
-
-int rounds = 2;
+int rounds = 3;
 int speed = 75;
-long time = 8000;
-int level = 1;
-long rest = 30000;
-int volume = 2;
+unsigned long time = 180000;
+int level = 3;
+unsigned long rest = 30000;
+int volume = 3;
 
 void drawHomeScreen();
 void drawRoundsScreen();
@@ -40,12 +32,33 @@ void drawRestScreen();
 void drawVolumeScreen();
 void drawSparringScreen();
 
-String millisToTimeStr(int milliseconds);
+void SparringMode();
+void rightStraight();
+void leftStraight();
+void rightHook();
+void leftHook();
+void measurespeed(int s);
+unsigned long servoDuration(int servoSpeed);
 
-Servo servo1;
-Servo servo2;
-Servo servo3;
-Servo servo4;
+unsigned long countdowntime;
+
+String millisToTimeStr(unsigned long milliseconds) {
+  String minutes = String(milliseconds / 60000);
+  String seconds = String((milliseconds / 1000) % 60);
+  if (seconds.length() < 2) {
+    seconds = "0" + seconds;
+  }
+
+  if (minutes.length() < 2) {
+    minutes = " " + minutes;
+  }
+  return minutes + ":" + seconds;
+}
+  
+VarSpeedServo servo1;
+VarSpeedServo servo2;
+VarSpeedServo servo3;
+VarSpeedServo servo4;
 
 
 void setup() {
@@ -55,10 +68,15 @@ void setup() {
 
   myTouch.InitTouch();
   myTouch.setPrecision(PREC_MEDIUM);
+
+    //assigns the servo objects to a pin on the arduino
+  servo1.attach(8); 
+  servo2.attach(9);
+  servo3.attach(10);
+  servo4.attach(11);  
 }
 
 void loop() {
-  drawHomeScreen();
-  //drawRoundsScreen();
-  //drawSparringScreen();
+  drawHomeScreen();  
+  //drawSparringScreen();     
 }
