@@ -1,7 +1,5 @@
-void SparringMode() {   
-  unsigned long time1 = 0;  
-  unsigned long initialTime = millis(); // holds the amount of time passed since board has been started up
-    
+void SparringMode() {    
+      
   // executes set of strikes based on the strike volume settings
   for (int i = 0; i < volume; i++) {  
 
