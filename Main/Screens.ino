@@ -53,6 +53,8 @@ void drawHomeScreen() {
       if (pressed == Rounds_btn) {
         drawRoundsScreen();
       } else if (pressed == Speed_btn) {
+
+
         drawSpeedScreen();
       } else if (pressed == Time_btn) {
         drawTimeScreen();
@@ -198,14 +200,17 @@ void drawTimeScreen() {
         drawHomeScreen();
         break;
       }
-      else if (pressed == plus_btn && time < 600000) { // maximal duration 10 minutes
+      // maximal duration 10 minutes
+      else if (pressed == plus_btn && time < 600000) { 
         time += 15000;         
-        myGLCD.print(millisToTimeStr(time), CENTER, 220); // updates displayed value
+        // updates displayed value
+        myGLCD.print(millisToTimeStr(time), CENTER, 220);
       }
-
-      else if (pressed == minus_btn && time > 30000) { // minimal duration 30 seconds
+      // minimal duration 30 seconds
+      else if (pressed == minus_btn && time > 30000) {
         time -= 15000;           
-        myGLCD.print(millisToTimeStr(time), CENTER, 220); // updates displayed value
+        // updates displayed value
+        myGLCD.print(millisToTimeStr(time), CENTER, 220);
       }
     }
   }
@@ -288,14 +293,17 @@ void drawRestScreen() {
         drawHomeScreen();
         break;
       }
-      else if (pressed == plus_btn && rest < 300000) { // maximal resting time 5 minutes
+      // maximal resting time 5 minutes
+      else if (pressed == plus_btn && rest < 300000) {
         rest += 10000;         
-        myGLCD.print(millisToTimeStr(rest), CENTER, 220); // updates displayed value
+        // updates displayed value
+        myGLCD.print(millisToTimeStr(rest), CENTER, 220);
       }
-
-      else if (pressed == minus_btn && rest > 10000) { // minimal resting time 10 seconds
+      // minimal resting time 10 seconds
+      else if (pressed == minus_btn && rest > 10000) {
         rest -= 10000;           
-        myGLCD.print(millisToTimeStr(rest), CENTER, 220); // updates displayed value
+        // updates displayed value
+        myGLCD.print(millisToTimeStr(rest), CENTER, 220); 
       }
     }
   }
@@ -335,14 +343,17 @@ void drawVolumeScreen() {
         drawHomeScreen();
         break;
       }
-      else if (pressed == plus_btn && volume < 4) { // maximal consecutive strikes 4
+      // maximal consecutive strikes 4
+      else if (pressed == plus_btn && volume < 4) {
         volume += 1;         
-        myGLCD.printNumI(volume, CENTER, 220); // updates displayed value
+        // updates displayed value
+        myGLCD.printNumI(volume, CENTER, 220); 
       }
-
-      else if (pressed == minus_btn && volume > 1) { // minimal consecutive strikes 1
+      // minimal consecutive strikes 1
+      else if (pressed == minus_btn && volume > 1) { 
         volume -= 1;           
-        myGLCD.printNumI(volume, CENTER, 220); // updates displayed value
+        // updates displayed value
+        myGLCD.printNumI(volume, CENTER, 220); 
       }
     }
   }
@@ -355,14 +366,18 @@ void drawSparringScreen() {
   myGLCD.setColor(255, 255, 255);
   myGLCD.setFont(SevenSegment96x144Num);
 
-  unsigned long initialseconds = millis() / 1000;   // holds the amount of seconds since the board has been started up
-  unsigned long duration;  // either holds the value of the round duration or of the resting duration
-  unsigned long added_time = 0;  // holds the value to reset the countdown clock
+  // holds the amount of seconds since the board has been started up
+  unsigned long initialseconds = millis() / 1000;   
+  // either holds the value of the round duration or of the resting duration  
+  unsigned long duration; 
+  // holds the value to reset the countdown clock
+  unsigned long added_time = 0;  
   int currentRound = 1;
   float progress = 0.0;
   String TimeString;
 
-  unsigned long delaybetween; // holds the amount of time between each set of attacks
+  // holds the amount of time between each set of attacks
+  unsigned long delaybetween; 
   unsigned long time1 = 0;
   unsigned long time2 = 0;         
 
@@ -372,8 +387,9 @@ void drawSparringScreen() {
   myButtons.setButtonColors(VGA_WHITE, VGA_GRAY, VGA_BLACK, VGA_WHITE, VGA_RED);
   int StopSpar_btn = myButtons.addButton(300, 380, 200, 80, "QUIT");
 
-    
-  for (int i = 0; i < (2 * rounds); i++) { // loops for the total amount of rounds, rest times and the initial countdown
+  // loops for the total amount of rounds, rest times and the initial 
+  countdown  
+  for (int i = 0; i < (2 * rounds); i++) { 
     if (i != 0) {
 
       // prints the current round
@@ -395,18 +411,22 @@ void drawSparringScreen() {
 
     while (true) { 
       
-      // sets the delay between each set of attacks based on level, strike volume and speed settings
+      // sets the delay between each set of attacks 
+      // based on level, strike volume and speed settings
       switch (level) {
         case 1:
-        delaybetween = volume * servoDuration(speed) + 2500; // 2500ms delay time
+        // 2500ms delay time
+        delaybetween = volume * servoDuration(speed) + 2500; 
         break;
 
         case 2:    
-        delaybetween = volume * servoDuration(speed) + 1500; // 1500ms delay time
+        // 1500ms delay time
+        delaybetween = volume * servoDuration(speed) + 1500; 
         break;
 
-        case 3:    
-        delaybetween = volume * servoDuration(speed) + random(500, 4000); // random delay time between 500ms and 4000ms
+        case 3:   
+        // random delay time between 500ms and 4000ms
+        delaybetween = volume * servoDuration(speed) + random(500, 4000); 
         break;
       }          
 
@@ -441,8 +461,10 @@ void drawSparringScreen() {
         }              
         
         else {
-          countdowntime = (duration / 1000) + initialseconds + added_time - (millis() / 1000); // countdown clock during round or rest times
-          progress = 1 - (countdowntime / float(duration / 1000)); // calculates current progress
+          // countdown clock during round or rest times
+          countdowntime = (duration / 1000) + initialseconds + added_time - (millis() / 1000); 
+          // calculates current progress
+          progress = 1 - (countdowntime / float(duration / 1000)); 
           
           unsigned long countdown_minute = ((countdowntime / 60) % 60);
           unsigned long countdown_sec = countdowntime % 60;

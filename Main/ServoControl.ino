@@ -1,5 +1,5 @@
 void SparringMode() {    
-      
+
   // executes set of strikes based on the strike volume settings
   for (int i = 0; i < volume; i++) {  
 
@@ -29,7 +29,7 @@ void SparringMode() {
   }               
 }
 
-// functions to the each servo based on the speed settings
+// functions to move each servo based on the speed settings
 
 void rightStraight() {
   servo3.write(180, (255 * speed / 100), true);
