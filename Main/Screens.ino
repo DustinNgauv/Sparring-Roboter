@@ -387,8 +387,7 @@ void drawSparringScreen() {
   myButtons.setButtonColors(VGA_WHITE, VGA_GRAY, VGA_BLACK, VGA_WHITE, VGA_RED);
   int StopSpar_btn = myButtons.addButton(300, 380, 200, 80, "QUIT");
 
-  // loops for the total amount of rounds, rest times and the initial 
-  countdown  
+  // loops for the total amount of rounds, rest times and the initial countdown  
   for (int i = 0; i < (2 * rounds); i++) { 
     if (i != 0) {
 
